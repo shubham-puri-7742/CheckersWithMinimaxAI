@@ -97,3 +97,14 @@ class Game:
       self.turn = WHITE
     else:
       self.turn = BLACK
+
+  # gets the board
+  def getBoard(self):
+    return self.board
+
+  # Plays the AI's move
+  def AImove(self, board):
+    # Hackish: we simply change the board (See Minimax implementation)
+    self.board = board
+    # and change turns
+    self.changeTurn()

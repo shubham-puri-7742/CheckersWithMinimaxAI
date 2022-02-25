@@ -1,6 +1,7 @@
 import pygame
-from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, BLACK
+from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, BLACK, WHITE
 from checkers.game import Game
+from minimax.algorithm import minimax
 
 FPS = 60
 
@@ -27,12 +28,18 @@ def main():
   # game loop
   while run:
     clock.tick(FPS)
+
+    # Activate AI
+    if game.turn == WHITE:
+      # get the value, board pair. Args: board, depth, colour, game instance
+      value, newBoard = minimax(game.getBoard(), 3, WHITE, game)
+      # play AI's move (basically swap boards - see the hack)
+      game.AImove(newBoard)
     
     # if someone won
     if game.winner() != None:
       # print the colour of the winner
       print(game.winner())
-      input()
       run = False
 
     # query for events

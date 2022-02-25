@@ -25,6 +25,27 @@ class Board:
         # draw a white SQUARE_SIZE x SQUARE_SIZE rectangle at (x, y) = (row * SQUARE_SIZE, col * SQUARE_SIZE)
         pygame.draw.rect(win, WHITE, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
+  # 'score' the baord (for the Minimax AI).
+  # White = AI, so the larger (whiteLeft - blackLeft) is, the better the game state for the AI
+  # The kings factor in the equation so that the AI prioritises kings
+  def evaluateBoard(self):
+    return (self.whiteLeft + 0.5 * self.whiteKings - self.blackLeft + 0.5 * self.blackKings)
+
+  # get all pieces of a colour (for the Minimax AI)
+  def getAllPieces(self, colour):
+    # initialise a blank list
+    pieces = []
+    # for each row on the board
+    for row in self.board:
+      # for each square in the row
+      for piece in row:
+        # if it is not empty and is of the given colour
+        if piece != 0 and piece.colour == colour:
+          # append it to the list
+          pieces.append(piece)
+    # return the list
+    return pieces
+
   # move piece to row, col
   def movePiece(self, piece, row, col):
     # swap the values in the internal representation of the board
